@@ -33,7 +33,7 @@ stage('build') {
         deleteDir()
         checkout scm
 
-        def outputPath = "${pwd()}/target/"
+        def outputPath = "${pwd()}/target"
 
         sh "mkdir -p '${outputPath}'"
 
