@@ -39,7 +39,7 @@ stage('build') {
 
         docker.image('jcustenborder/packaging-centos-7:24').inside {
             createPackage('schema-registry-server', 'rpm', version, 'Confluent Schema Registry', 'http://www.confluent.io',
-                'schema-registry/el6', '/etc/sysconfig', 'schema-registry/el6/scripts/before-install', 'schema-registry/el6/scripts/before-remove')
+                'schema-registry/el6', 'etc/sysconfig', 'schema-registry/el6/scripts/before-install', 'schema-registry/el6/scripts/before-remove')
         }
     }
 }
