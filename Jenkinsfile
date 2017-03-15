@@ -32,8 +32,9 @@ stage('build') {
 
         def version = '3.2.0'
 
-
-        createPackage('schema-registry-server', 'rpm', version, 'Confluent Schema Registry', 'http://www.confluent.io',
-           'schema-registry/el6', '/etc/sysconfig', 'schema-registry/el6/scripts/before-install', 'schema-registry/el6/scripts/before-remove')
+        docker.image(images.jdk8_docker_image).inside {
+            createPackage('schema-registry-server', 'rpm', version, 'Confluent Schema Registry', 'http://www.confluent.io',
+                'schema-registry/el6', '/etc/sysconfig', 'schema-registry/el6/scripts/before-install', 'schema-registry/el6/scripts/before-remove')
+        }
     }
 }
