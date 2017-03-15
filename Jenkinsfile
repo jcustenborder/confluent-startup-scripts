@@ -34,6 +34,6 @@ stage('build') {
 
 
         createPackage('schema-registry-server', 'rpm', version, 'Confluent Schema Registry', 'http://www.confluent.io',
-           'schema-registry/el6', '/etc/sysconfig')
+           'schema-registry/el6', '/etc/sysconfig', 'schema-registry/el6/scripts/before-install', 'schema-registry/el6/scripts/before-remove')
     }
 }
