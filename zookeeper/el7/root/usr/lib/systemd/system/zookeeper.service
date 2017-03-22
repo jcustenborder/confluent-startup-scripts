@@ -5,7 +5,7 @@ After = basic.target network.target
 
 [Service]
 User = zookeeper
-EnvironmentFile = /etc/sysconfig/zookeeper
+EnvironmentFile = /etc/sysconfig/zookeeper-server
 ExecStart = /usr/bin/zookeeper-server-start /etc/kafka/zookeeper.properties
 LimitNOFILE = 131072
 KillMode = process

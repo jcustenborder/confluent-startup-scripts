@@ -20,7 +20,7 @@
 
 . /etc/init.d/functions
 
-if [ -f /etc/sysconfig/schema-registry-server ]; then
+if [ -f /etc/sysconfig/zookeeper-server ]; then
     . /etc/sysconfig/zookeeper-server
 fi
 
