@@ -1,0 +1,7 @@
+getent group schema-registry >/dev/null || groupadd -r schema-registry
+getent passwd schema-registry >/dev/null || \
+    useradd -r -g schema-registry -d /var/log/confluent/schema-registry -s /sbin/nologin \
+    -c "Service Account for Schema Registry Service" schema-registry
+mkdir -p /var/log/confluent/schema-registry /var/run/confluent
+chown -R schema-registry:schema-registry /var/log/confluent/schema-registry
+exit 0

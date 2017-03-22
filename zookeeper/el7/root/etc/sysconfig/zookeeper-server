@@ -1,0 +1,4 @@
+KAFKA_HEAP_OPTS="-Xmx1000M"
+KAFKA_OPTS="-Djava.net.preferIPv4Stack=true"
+GC_LOG_ENABLED="true"
+LOG_DIR="/var/log/confluent/zookeeper"

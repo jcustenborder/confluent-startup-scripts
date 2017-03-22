@@ -1,0 +1,14 @@
+[Unit]
+Description = Schema Registry by Confluent
+Wants = basic.target
+After = basic.target network.target
+
+[Service]
+User = schema-registry
+EnvironmentFile = /etc/sysconfig/schema-registry-server
+ExecStart = /usr/bin/schema-registry-start /etc/schema-registry/schema-registry.properties
+ExecStop = /usr/bin/schema-registry-stop
+LimitNOFILE = 131072
+KillMode = process
+RestartSec = 5
+Type = simple

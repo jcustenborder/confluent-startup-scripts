@@ -20,24 +20,29 @@
 
 . /etc/init.d/functions
 
-if [ -f /etc/sysconfig/schema-registry ]; then
-. /etc/sysconfig/schema-registry
+if [ -f /etc/sysconfig/schema-registry-server ]; then
+    . /etc/sysconfig/schema-registry-server
 fi
 
+start() {
+    echo -n "Starting Confluent schema registry"
+    daemon --user $SCHEMA_REGISTRY_USER /usr/bin/schema-registry-start -daemon $SCHEMA_REGISTRY_CONFIG
+}
+
+stop() {
+    echo -n "Stopping Confluent schema registry"
+    /usr/bin/schema-registry-stop
+}
 case "$1" in
     start)
-        echo -n "Starting Confluent schema registry"
-        sudo -u $SCHEMA_REGISTRY_USER /usr/bin/schema-registry-start -daemon $SCHEMA_REGISTRY_CONFIG
+        start
     ;;
     stop)
-        echo -n "Stopping Confluent schema registry"
-        sudo -u $SCHEMA_REGISTRY_USER /usr/bin/schema-registry-stop
+        stop
     ;;
     restart)
-        echo -n "Restarting Confluent schema registry"
-        sudo -u $SCHEMA_REGISTRY_USER /usr/bin/schema-registry-stop
-        sleep 30
-        sudo -u $SCHEMA_REGISTRY_USER /usr/bin/schema-registry-start -daemon $SCHEMA_REGISTRY_CONFIG
+        stop
+        start
     ;;
     *)
         echo "Usage: $0 {start|stop|restart}"
