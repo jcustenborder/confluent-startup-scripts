@@ -1,0 +1,7 @@
+getent group kafka-connect-standalone >/dev/null || groupadd -r kafka-connect-standalone
+getent passwd kafka-connect-standalone >/dev/null || \
+    useradd -r -g kafka-connect-standalone -d /var/log/confluent/kafka-connect-standalone -s /sbin/nologin \
+    -c "Service Account for Kafka Service" kafka-connect-standalone
+mkdir -p /var/log/confluent/kafka-connect-standalone /var/run/confluent /var/lib/kafka-connect-standalone/
+chown -R kafka-connect-standalone:kafka-connect-standalone /var/log/confluent/kafka-connect-standalone/ /var/lib/kafka-connect-standalone/
+exit 0

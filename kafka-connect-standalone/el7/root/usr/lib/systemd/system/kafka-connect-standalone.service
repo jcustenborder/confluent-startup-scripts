@@ -1,0 +1,17 @@
+[Unit]
+Description = Apache Kafka by Confluent
+Wants = basic.target
+After = basic.target network.target
+
+[Service]
+EnvironmentFile = /etc/sysconfig/kafka-connect-standalone-server
+ExecStart = /usr/bin/kafka-connect-standalone-server-start /etc/kafka-connect-standalone/server.properties
+LimitNOFILE = 256000
+KillMode = process
+User = kafka-connect-standalone
+RestartSec = 5
+Type = simple
+ExecStop = /usr/bin/kafka-connect-standalone-server-stop
+
+[Install]
+WantedBy = multi-user.target
