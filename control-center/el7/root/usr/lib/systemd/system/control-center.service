@@ -1,0 +1,16 @@
+[Unit]
+Description = Confluent Control Center
+Wants = basic.target
+After = basic.target network.target
+
+[Service]
+User = control-center
+EnvironmentFile = /etc/sysconfig/control-center-server
+ExecStart = /usr/bin/control-center-start /etc/confluent-control-center/control-center.properties
+LimitNOFILE = 131072
+KillMode = process
+RestartSec = 5
+Type = simple
+
+[Install]
+WantedBy = multi-user.target

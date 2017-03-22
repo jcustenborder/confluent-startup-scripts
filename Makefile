@@ -15,7 +15,7 @@ RPM_FILENAME=$(VERSION)-$(ITERATION).rpm
 DESCRIPTION_SCHEMA_REGISTRY="Confluent Schema Registry Server"
 DESCRIPTION_ZOOKEEPER="Apache Zookeeper provided by Confluent."
 DESCRIPTION_KAFKA="Apache Kafka provided by Confluent."
-
+DESCRIPTION_CONTROL_CENTER="Confluent Control Center."
 
 clean:
 	rm -rf $(OUTPUT)
@@ -87,8 +87,29 @@ kafka-el7: clean
 	--depends confluent-kafka-2.11 \
 	.
 
+control-center-el6: clean
+	$(FPM_RPM_DEFAULT) \
+	--chdir control-center/el6/root \
+	--name confluent-control-center-server \
+	--description $(DESCRIPTION_CONTROL_CENTER) \
+	--package $(OUTPUT_EL6)/confluent-control-center-server_$(RPM_FILENAME) \
+	--config-files etc/sysconfig \
+	--before-install control-center/scripts/before-install \
+	--depends confluent-control-center-2.11 \
+	.
 
-el6: schema-registry-el6 zookeeper-el6 kafka-el6
-el7: schema-registry-el7 zookeeper-el7 kafka-el7
+control-center-el7: clean
+	$(FPM_RPM_DEFAULT) \
+	--chdir control-center/el7/root \
+	--name confluent-control-center-server \
+	--description $(DESCRIPTION_CONTROL_CENTER) \
+	--package $(OUTPUT_EL7)/confluent-control-center-server_$(RPM_FILENAME) \
+	--config-files etc/sysconfig \
+	--before-install control-center/scripts/before-install \
+	--depends confluent-control-center-2.11 \
+	.
+
+el6: schema-registry-el6 zookeeper-el6 kafka-el6 control-center-el6
+el7: schema-registry-el7 zookeeper-el7 kafka-el7 control-center-el7
 all: el6 el7
 

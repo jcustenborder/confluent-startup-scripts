@@ -1,0 +1,7 @@
+getent group control-center >/dev/null || groupadd -r control-center
+getent passwd control-center >/dev/null || \
+    useradd -r -g control-center -d /var/log/confluent/control-center -s /sbin/nologin \
+    -c "Service Account for Confluent Control Center" control-center
+mkdir -p /var/log/confluent/control-center /var/run/confluent /var/lib/control-center/
+chown -R control-center:control-center /var/log/confluent/control-center/ /var/lib/control-center/
+exit 0
