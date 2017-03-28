@@ -1,5 +1,5 @@
 URL=http://www.confluent.io
-VERSION=3.2.0
+VERSION?=3.2.0
 LICENSE='The Apache License, Version 2.0'
 VENDOR=Confluent
 ARCHITECTURE=all
@@ -7,12 +7,12 @@ MAINTAINER=jeremy@confluent.io
 OUTPUT=target
 OUTPUT_EL6=$(OUTPUT)/el6
 OUTPUT_EL7=$(OUTPUT)/el7
-ITERATION=`date '+%s'`
-FPM_RPM_DEFAULT=fpm --iteration $(ITERATION) --input-type dir --output-type rpm --version $(VERSION) --url $(URL) --license $(LICENSE) --vendor $(VENDOR) --architecture $(ARCHITECTURE) --maintainer $(MAINTAINER) --rpm-os linux
+ITERATION?=`date '+%s'`
+FPM_RPM_DEFAULT=fpm --input-type dir --output-type rpm --rpm-os linux --rpm-digest sha256 --version $(VERSION) --iteration $(ITERATION) --url $(URL) --license $(LICENSE) --vendor $(VENDOR) --architecture $(ARCHITECTURE) --maintainer $(MAINTAINER)
 EL7_RPM_FILENAME=$(VERSION)-$(ITERATION).el7.rpm
 EL6_RPM_FILENAME=$(VERSION)-$(ITERATION).el6.rpm
 
-
+#package descriptions
 DESCRIPTION_SCHEMA_REGISTRY="Confluent Schema Registry Server"
 DESCRIPTION_ZOOKEEPER="Apache Zookeeper provided by Confluent."
 DESCRIPTION_KAFKA="Apache Kafka provided by Confluent."
@@ -145,7 +145,41 @@ kafka-connect-standalone-el7: clean
 	--depends confluent-kafka-connect-storage-common \
 	.
 
-el6: schema-registry-el6 zookeeper-el6 kafka-el6 control-center-el6 kafka-connect-standalone-el6
-el7: schema-registry-el7 zookeeper-el7 kafka-el7 control-center-el7 kafka-connect-standalone-el7
+kafka-connect-distributed-el6: clean
+	$(FPM_RPM_DEFAULT) \
+	--chdir kafka-connect-distributed/el6/root \
+	--name confluent-kafka-connect-distributed-server \
+	--description $(DESCRIPTION_KAFKA_CONNECT) \
+	--package $(OUTPUT_EL6)/confluent-kafka-connect-distributed-server_$(EL6_RPM_FILENAME) \
+	--config-files etc/sysconfig \
+	--before-install kafka-connect-distributed/scripts/before-install \
+	--depends confluent-kafka-connect-distributed-2.11 \
+	--depends confluent-kafka-connect-elasticsearch \
+	--depends confluent-kafka-connect-hdfs \
+	--depends confluent-kafka-connect-jdbc \
+	--depends confluent-kafka-connect-replicator \
+	--depends confluent-kafka-connect-s3 \
+	--depends confluent-kafka-connect-storage-common \
+	.
+
+kafka-connect-distributed-el7: clean
+	$(FPM_RPM_DEFAULT) \
+	--chdir kafka-connect-distributed/el7/root \
+	--name confluent-kafka-connect-distributed-server \
+	--description $(DESCRIPTION_KAFKA_CONNECT) \
+	--package $(OUTPUT_EL7)/confluent-kafka-connect-distributed-server_$(EL7_RPM_FILENAME) \
+	--config-files etc/sysconfig \
+	--before-install kafka-connect-distributed/scripts/before-install \
+	--depends confluent-kafka-connect-distributed-2.11 \
+	--depends confluent-kafka-connect-elasticsearch \
+	--depends confluent-kafka-connect-hdfs \
+	--depends confluent-kafka-connect-jdbc \
+	--depends confluent-kafka-connect-replicator \
+	--depends confluent-kafka-connect-s3 \
+	--depends confluent-kafka-connect-storage-common \
+	.
+
+el6: schema-registry-el6 zookeeper-el6 kafka-el6 control-center-el6 kafka-connect-standalone-el6 kafka-connect-distributed-el6
+el7: schema-registry-el7 zookeeper-el7 kafka-el7 control-center-el7 kafka-connect-standalone-el7 kafka-connect-distributed-el7
 all: el6 el7
 
