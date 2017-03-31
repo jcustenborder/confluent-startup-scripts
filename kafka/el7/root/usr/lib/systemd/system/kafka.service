@@ -11,6 +11,7 @@ KillMode = process
 User = kafka
 RestartSec = 5
 Type = simple
+TimeoutStopSec = 60
 ExecStop = /usr/bin/kafka-server-stop
 
 [Install]

@@ -12,3 +12,4 @@ LimitNOFILE = 131072
 KillMode = process
 RestartSec = 5
 Type = simple
+TimeoutStopSec = 60

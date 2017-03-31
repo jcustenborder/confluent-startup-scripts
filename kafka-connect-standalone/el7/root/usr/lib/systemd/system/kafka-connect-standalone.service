@@ -11,6 +11,7 @@ KillMode = process
 User = kafka-connect-standalone
 RestartSec = 5
 Type = simple
+TimeoutStopSec = 60
 ExecStop = /usr/bin/kafka-connect-standalone-server-stop
 
 [Install]

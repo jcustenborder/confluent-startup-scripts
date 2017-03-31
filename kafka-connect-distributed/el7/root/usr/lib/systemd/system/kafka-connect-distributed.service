@@ -11,6 +11,7 @@ KillMode = process
 User = kafka-connect-distributed
 RestartSec = 5
 Type = simple
+TimeoutStopSec = 60
 ExecStop = /usr/bin/kafka-connect-distributed-server-stop
 
 [Install]
