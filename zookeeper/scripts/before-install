@@ -1,0 +1,7 @@
+getent group zookeeper >/dev/null || groupadd -r zookeeper
+getent passwd zookeeper >/dev/null || \
+    useradd -r -g zookeeper -d /var/log/confluent/zookeeper -s /sbin/nologin \
+    -c "Service Account for Zookeeper Service" zookeeper
+mkdir -p /var/log/confluent/zookeeper /var/run/confluent /var/lib/zookeeper/
+chown -R zookeeper:zookeeper /var/log/confluent/zookeeper/ /var/lib/zookeeper/
+exit 0

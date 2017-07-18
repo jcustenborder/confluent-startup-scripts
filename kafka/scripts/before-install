@@ -1,0 +1,7 @@
+getent group kafka >/dev/null || groupadd -r kafka
+getent passwd kafka >/dev/null || \
+    useradd -r -g kafka -d /var/log/confluent/kafka -s /sbin/nologin \
+    -c "Service Account for Kafka Service" kafka
+mkdir -p /var/log/confluent/kafka /var/run/confluent /var/lib/kafka/
+chown -R kafka:kafka /var/log/confluent/kafka/ /var/lib/kafka/
+exit 0

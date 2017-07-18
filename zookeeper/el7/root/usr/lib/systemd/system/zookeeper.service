@@ -1,0 +1,18 @@
+[Unit]
+Description = Apache Zookeeper by Confluent
+Wants = basic.target
+After = basic.target network.target
+
+[Service]
+User = zookeeper
+EnvironmentFile = /etc/sysconfig/zookeeper-server
+ExecStart = /usr/bin/zookeeper-server-start /etc/kafka/zookeeper.properties
+LimitNOFILE = 131072
+KillMode = process
+RestartSec = 5
+Type = simple
+TimeoutStopSec = 60
+ExecStop = /usr/bin/zookeeper-server-stop
+
+[Install]
+WantedBy = multi-user.target

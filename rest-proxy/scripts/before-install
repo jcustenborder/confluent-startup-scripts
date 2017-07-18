@@ -1,0 +1,7 @@
+getent group kafka-rest >/dev/null || groupadd -r kafka-rest
+getent passwd kafka-rest >/dev/null || \
+    useradd -r -g kafka-rest -d /var/log/confluent/kafka-rest -s /sbin/nologin \
+    -c "Service Account for Confluent Rest Proxy" kafka-rest
+mkdir -p /var/log/confluent/kafka-rest /var/run/confluent
+chown -R kafka-rest:kafka-rest /var/log/confluent/kafka-rest/
+exit 0

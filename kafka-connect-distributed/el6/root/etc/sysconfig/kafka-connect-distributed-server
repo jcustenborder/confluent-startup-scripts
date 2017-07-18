@@ -1,0 +1,6 @@
+export KAFKA_HEAP_OPTS="-Xmx1000M"
+export KAFKA_OPTS="-Djava.net.preferIPv4Stack=true"
+export GC_LOG_ENABLED="true"
+export LOG_DIR="/var/log/confluent/kafka-connect-distributed"
+export KAFKA_USER="kafka-connect"
+export KAFKA_CONFIG="/etc/kafka-connect-distributed/kafka-connect-distributed.properties"

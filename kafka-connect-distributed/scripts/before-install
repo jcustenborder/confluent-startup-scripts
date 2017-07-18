@@ -1,0 +1,7 @@
+getent group kafka-connect-distributed >/dev/null || groupadd -r kafka-connect-distributed
+getent passwd kafka-connect-distributed >/dev/null || \
+    useradd -r -g kafka-connect-distributed -d /var/log/confluent/kafka-connect-distributed -s /sbin/nologin \
+    -c "Service Account for Kafka Service" kafka-connect-distributed
+mkdir -p /var/log/confluent/kafka-connect-distributed /var/run/confluent /var/lib/kafka-connect-distributed/
+chown -R kafka-connect-distributed:kafka-connect-distributed /var/log/confluent/kafka-connect-distributed/ /var/lib/kafka-connect-distributed/
+exit 0
