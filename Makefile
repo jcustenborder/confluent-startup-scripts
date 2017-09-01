@@ -1,5 +1,5 @@
 URL=http://www.confluent.io
-VERSION?=3.2.0
+VERSION?=3.3.0
 LICENSE='The Apache License, Version 2.0'
 VENDOR=Confluent
 ARCHITECTURE=all
